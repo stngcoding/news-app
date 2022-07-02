@@ -9,7 +9,6 @@ import {
   ActivityIndicator,
   FlatList,
   Image,
-  
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import Ionicons from "react-native-vector-icons/FontAwesome5";
@@ -100,7 +99,7 @@ const Home = ({ navigation }) => {
     const [save, setSave] = useState(false);
     const renderNewsItems = ({ item }) => {
       return (
-        <View style={{ height: "35%", paddingTop: 30, flex:1, }}>
+        <View style={{ height: "25%", paddingTop: 30, flexGrow: 1 }}>
           <TouchableOpacity
             onPress={() => {
               props.navigation.navigate("Details");
@@ -128,13 +127,14 @@ const Home = ({ navigation }) => {
       );
     };
     return (
+      <View style={{ flex: 1, flexGrow: 1, height: "100%" }}>
         <FlatList
           data={data}
-          contentContainerStyle={{ flexGrow: 1 }}
           renderItem={renderNewsItems}
           keyExtractor={(item) => item.id}
           ListFooterComponent={<View style={{ height: 10 }} />}
         />
+      </View>
     );
   };
 
@@ -146,7 +146,6 @@ const Home = ({ navigation }) => {
       <View>
         <Text style={styles.lastestNew}>Lastest news</Text>
       </View>
-      
       <View style={styles.newsItemContainer}>
         <NewItem navigation={navigation} />
       </View>
@@ -163,6 +162,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   newsItemContainer: {
+    flex: 1,
     flexGrow: 1,
     width: "100%",
     backgroundColor: "#f5f7f8",
