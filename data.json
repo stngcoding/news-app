@@ -27,6 +27,7 @@
     },
     {
       "id": 2,
+      "imgURL": "https://picsum.photos/1280/720",
       "title": "This is title 2",
       "content": "HELLO THIS IS THE CONTENT",
       "publishDate": "25/11/2022",
@@ -51,6 +52,7 @@
     },
     {
       "id": 3,
+      "imgURL": "https://picsum.photos/1280/720",
       "title": "This is title 3",
       "content": "HELLO THIS IS THE CONTENT",
       "publishDate": "25/11/2022",
@@ -99,6 +101,7 @@
     },
     {
       "id": 5,
+      "imgURL": "https://picsum.photos/1280/720",
       "title": "This is title 5",
       "content": "HELLO THIS IS THE CONTENT",
       "publishDate": "25/11/2022",

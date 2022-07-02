@@ -6,13 +6,17 @@ import {
   ScrollView,
   TouchableOpacity,
   Dimensions,
-  Button,
+  ActivityIndicator,
+  FlatList,
+  Image,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Ionicons from "react-native-vector-icons/FontAwesome5";
 
 const ACTIVE = "ACTIVE";
 const INACTIVE = "INACTIVE";
+const API_URL =
+  "https://raw.githubusercontent.com/stngcoding/news-app/master/data.json";
 
 let deviceWidth = Dimensions.get("window").width;
 
@@ -71,38 +75,66 @@ const Carousel = () => {
   );
 };
 
-const NewItem = (props) => {
-  const [save, setSave] = useState(false);
-  return (
-    <TouchableOpacity
-      onPress={() => {
-        props.navigation.navigate("Details");
-      }}
-      style={styles.newItemContainer}
-    >
-      <View style={styles.newsImage}>
-        <Text>Image</Text>
-      </View>
-      <View style={styles.titleAndBottom}>
-        <View style={styles.newItemTextStyle}>
-          <Text style={styles.newsItemTitle}>News title</Text>
-        </View>
-        <View style={styles.dateAndSave}>
-          <View>
-            <Text style={styles.newsItemDate}>Date</Text>
-          </View>
-          <View style={styles.newsIcon}>
-            <TouchableOpacity>
-              <Ionicons name="bookmark" size={15} />
-            </TouchableOpacity>
-          </View>
-        </View>
-      </View>
-    </TouchableOpacity>
-  );
-};
-
 const Home = ({ navigation }) => {
+  const [data, setData] = useState([]);
+  const [isLoading, setLoading] = useState(true);
+
+  const getNews = async () => {
+    try {
+      const response = await fetch(API_URL);
+      const json = await response.json();
+      setData(json.news);
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getNews();
+  }, []);
+
+  const NewItem = (props) => {
+    const [save, setSave] = useState(false);
+    const renderNewsItems = ({ item }) => {
+      return (
+        <TouchableOpacity
+          onPress={() => {
+            props.navigation.navigate("Details");
+          }}
+          style={styles.newItemContainer}
+        >
+          <View style={styles.newsImage}>
+            <Image source={{ uri: item.imgURL }} style={styles.newsImage} />
+          </View>
+          <View style={styles.titleAndBottom}>
+            <View style={styles.newItemTextStyle}>
+              <Text style={styles.newsItemTitle}>{item.title}</Text>
+            </View>
+            <View style={styles.dateAndSave}>
+              <View>
+                <Text style={styles.newsItemDate}>{item.publishDate}</Text>
+              </View>
+              <View style={styles.newsIcon}>
+                <TouchableOpacity>
+                  <Ionicons name="bookmark" size={15} />
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </TouchableOpacity>
+      );
+    };
+    return (
+      <FlatList
+        data={data}
+        renderItem={renderNewsItems}
+        keyExtractor={(item) => item.id}
+      />
+    );
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <HeaderLogo />
@@ -144,7 +176,6 @@ const styles = StyleSheet.create({
   },
   lastestNew: {
     paddingLeft: 30,
-    marginBottom: 30,
     fontSize: 30,
     fontWeight: "500",
   },
@@ -172,7 +203,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     marginLeft: 50,
     borderBottomLeftRadius: 25,
-    height: "30%",
+    height: "70%",
     backgroundColor: "white",
     flexDirection: "row",
   },
