@@ -9,6 +9,7 @@ import {
   ActivityIndicator,
   FlatList,
   Image,
+  
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import Ionicons from "react-native-vector-icons/FontAwesome5";
@@ -99,37 +100,41 @@ const Home = ({ navigation }) => {
     const [save, setSave] = useState(false);
     const renderNewsItems = ({ item }) => {
       return (
-        <TouchableOpacity
-          onPress={() => {
-            props.navigation.navigate("Details");
-          }}
-          style={styles.newItemContainer}
-        >
+        <View style={{ height: "35%", paddingTop: 30, flex:1, }}>
+          <TouchableOpacity
+            onPress={() => {
+              props.navigation.navigate("Details");
+            }}
+            style={styles.newItemContainer}
+          >
             <Image source={{ uri: item.imgURL }} style={styles.newsImage} />
-          <View style={styles.titleAndBottom}>
-            <View style={styles.newItemTextStyle}>
-              <Text style={styles.newsItemTitle}>{item.title}</Text>
-            </View>
-            <View style={styles.dateAndSave}>
-              <View>
-                <Text style={styles.newsItemDate}>{item.publishDate}</Text>
+            <View style={styles.titleAndBottom}>
+              <View style={styles.newItemTextStyle}>
+                <Text style={styles.newsItemTitle}>{item.title}</Text>
               </View>
-              <View style={styles.newsIcon}>
-                <TouchableOpacity>
-                  <Ionicons name="bookmark" size={15} />
-                </TouchableOpacity>
+              <View style={styles.dateAndSave}>
+                <View>
+                  <Text style={styles.newsItemDate}>{item.publishDate}</Text>
+                </View>
+                <View style={styles.newsIcon}>
+                  <TouchableOpacity>
+                    <Ionicons name="bookmark" size={15} />
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
-          </View>
-        </TouchableOpacity>
+          </TouchableOpacity>
+        </View>
       );
     };
     return (
-      <FlatList
-        data={data}
-        renderItem={renderNewsItems}
-        keyExtractor={(item) => item.id}
-      />
+        <FlatList
+          data={data}
+          contentContainerStyle={{ flexGrow: 1 }}
+          renderItem={renderNewsItems}
+          keyExtractor={(item) => item.id}
+          ListFooterComponent={<View style={{ height: 10 }} />}
+        />
     );
   };
 
@@ -138,7 +143,10 @@ const Home = ({ navigation }) => {
       <HeaderLogo />
       <NavBar />
       <Carousel />
-      <Text style={styles.lastestNew}>Lastest news</Text>
+      <View>
+        <Text style={styles.lastestNew}>Lastest news</Text>
+      </View>
+      
       <View style={styles.newsItemContainer}>
         <NewItem navigation={navigation} />
       </View>
@@ -155,7 +163,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   newsItemContainer: {
-    flex: 3,
+    flexGrow: 1,
     width: "100%",
     backgroundColor: "#f5f7f8",
   },
@@ -174,6 +182,7 @@ const styles = StyleSheet.create({
   },
   lastestNew: {
     paddingLeft: 30,
+    paddingBottom: 10,
     fontSize: 30,
     fontWeight: "500",
   },
@@ -201,7 +210,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     marginLeft: 50,
     borderBottomLeftRadius: 25,
-    height: "70%",
+    height: "100%",
     backgroundColor: "white",
     flexDirection: "row",
   },
@@ -211,7 +220,7 @@ const styles = StyleSheet.create({
   },
   newsImage: {
     zIndex: 1,
-    bottom: 20,
+    bottom: 10,
     left: -20,
     backgroundColor: "gray",
     borderRadius: 25,
