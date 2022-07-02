@@ -105,9 +105,7 @@ const Home = ({ navigation }) => {
           }}
           style={styles.newItemContainer}
         >
-          <View style={styles.newsImage}>
             <Image source={{ uri: item.imgURL }} style={styles.newsImage} />
-          </View>
           <View style={styles.titleAndBottom}>
             <View style={styles.newItemTextStyle}>
               <Text style={styles.newsItemTitle}>{item.title}</Text>
@@ -240,5 +238,8 @@ const styles = StyleSheet.create({
   },
   newsIcon: {
     alignItems: "flex-end",
+  },
+  newsImageContainer: {
+    width: "100%",
   },
 });
