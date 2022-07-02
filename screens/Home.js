@@ -9,8 +9,9 @@ import {
   ActivityIndicator,
   FlatList,
   Image,
+  Animated,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Ionicons from "react-native-vector-icons/FontAwesome5";
 
 const ACTIVE = "ACTIVE";
@@ -18,7 +19,12 @@ const INACTIVE = "INACTIVE";
 const API_URL =
   "https://raw.githubusercontent.com/stngcoding/news-app/master/data.json";
 
-let deviceWidth = Dimensions.get("window").width;
+const width = Dimensions.get("window").width;
+const height = Dimensions.get("window").height;
+
+const WIDTH_CONTAINER = width * 0.7;
+const LATERAL_SPACE = (width - WIDTH_CONTAINER) / 2;
+const SPACE = 10;
 
 const HeaderLogo = () => {
   return (
@@ -70,7 +76,17 @@ const NavBar = () => {
 const Carousel = () => {
   return (
     <View style={styles.carousel}>
-      <Text>Image</Text>
+      <View style={styles.sliderContainer}>
+        <View>
+          <Text>Title</Text>
+        </View>
+        <View>
+          <Text>Date</Text>
+          <TouchableOpacity>
+            <Ionicons name="bookmark" size={15} />
+          </TouchableOpacity>
+        </View>
+      </View>
     </View>
   );
 };
@@ -78,6 +94,7 @@ const Carousel = () => {
 const Home = ({ navigation }) => {
   const [data, setData] = useState([]);
   const [isLoading, setLoading] = useState(true);
+  const scrollX = useRef(new Animated.Value(0)).current;
 
   const getNews = async () => {
     try {
@@ -96,7 +113,6 @@ const Home = ({ navigation }) => {
   }, []);
 
   const NewItem = (props) => {
-    const [save, setSave] = useState(false);
     const renderNewsItems = ({ item }) => {
       return (
         <View style={{ height: "25%", paddingTop: 30, flexGrow: 1 }}>
@@ -127,12 +143,80 @@ const Home = ({ navigation }) => {
       );
     };
     return (
-      <View style={{ flex: 1, flexGrow: 1, height: "100%" }}>
+      <View style={{ flex: 1 }}>
         <FlatList
           data={data}
           renderItem={renderNewsItems}
+          contentContainerStyle={{ paddingBottom: 10 }}
           keyExtractor={(item) => item.id}
-          ListFooterComponent={<View style={{ height: 10 }} />}
+        />
+      </View>
+    );
+  };
+
+  const SliderItem = (props) => {
+    const renderSliderItem = ({ item, index }) => {
+      return (
+        <View>
+          <View
+            style={{
+              flex: 1,
+              height: "100%",
+              width: "80%",
+            }}
+          >
+            <Image source={{ uri: item.imgURL }} style={styles.sliderImage} />
+            <View
+              style={{
+                flex: 1,
+                width: "118%",
+                height: "100%",
+                flexDirection: "column",
+                position: "absolute",
+                justifyContent: "space-between",
+                padding: 20,
+              }}
+            >
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <Text style={{ fontSize: 20, color: "#fff" }}>
+                  {item.publishDate}
+                </Text>
+                <TouchableOpacity>
+                  <Ionicons name="bookmark" size={20} color={"#fff"} />
+                </TouchableOpacity>
+              </View>
+              <View style={{ justifyContent: "flex-start" }}>
+                <Text style={{ fontSize: 29, color: "#fff" }}>
+                  {item.title}
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
+      );
+    };
+    return (
+      <View
+        style={{
+          flex: 1,
+        }}
+      >
+        <FlatList
+          data={data}
+          horizontal={true}
+          scrollToOverflowEnabled={true}
+          renderItem={renderSliderItem}
+          showsHorizontalScrollIndicator={false}
+          decelerationRate={0}
+          scrollEventThrottle={16}
+          snapToInterval={WIDTH_CONTAINER}
+          keyExtractor={(item) => item.id}
         />
       </View>
     );
@@ -142,12 +226,16 @@ const Home = ({ navigation }) => {
     <SafeAreaView style={styles.container}>
       <HeaderLogo />
       <NavBar />
-      <Carousel />
-      <View>
-        <Text style={styles.lastestNew}>Lastest news</Text>
+      <View style={{ height: "30%" }}>
+        <SliderItem />
       </View>
-      <View style={styles.newsItemContainer}>
-        <NewItem navigation={navigation} />
+      <View>
+        <Text style={styles.lastestNew}>Latest news</Text>
+      </View>
+      <View style={styles.list}>
+        <View style={styles.newsItemContainer}>
+          <NewItem navigation={navigation} />
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -158,8 +246,20 @@ export default Home;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: "#f5f7f8",
     backgroundColor: "white",
+  },
+  sliderImage: {
+    width: 300,
+    height: "100%",
+    resizeMode: "cover",
+    borderRadius: 24,
+    margin: 0,
+    marginRight: 20,
+    marginBottom: 10,
+  },
+  list: {
+    flex: 1,
+    flexGrow: 1,
   },
   newsItemContainer: {
     flex: 1,
@@ -171,16 +271,32 @@ const styles = StyleSheet.create({
     width: 30,
   },
   carousel: {
+    backgroundColor: "#f5f7f8",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "50%",
+  },
+  sliderContainer: {
+    padding: 20,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "space-between",
     width: "100%",
-    height: "30%",
-    marginTop: 20,
+    height: "70%",
     backgroundColor: "gray",
+    borderRadius: 25,
+  },
+  topLayer: {
+    zIndex: 1,
+    paddingBottom: 200,
   },
   logo: {
     backgroundColor: "white",
     paddingLeft: 10,
   },
   lastestNew: {
+    backgroundColor: "#f5f7f8",
+
     paddingLeft: 30,
     paddingBottom: 10,
     fontSize: 30,
@@ -210,7 +326,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     marginLeft: 50,
     borderBottomLeftRadius: 25,
-    height: "100%",
+    // height: "100%",
     backgroundColor: "white",
     flexDirection: "row",
   },
@@ -231,6 +347,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     width: "60%",
+  },
+  dateAndSaveTopLayer: {
+    alignItems: "flex-start",
+    zIndex: 1,
   },
   newItemTextStyle: {
     justifyContent: "center",
