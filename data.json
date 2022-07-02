@@ -1,0 +1,125 @@
+{
+  "news": [
+    {
+      "id": 1,
+      "title": "This is title 1",
+      "imgURL": "https://picsum.photos/1280/720",
+      "content": "HELLO THIS IS THE CONTENT",
+      "publishDate": "25/11/2022",
+      "comments": [
+        {
+          "userName": "A",
+          "userComment": "Cool"
+        },
+        {
+          "userName": "B",
+          "userComment": "Cool"
+        },
+        {
+          "userName": "C",
+          "userComment": "Cool"
+        },
+        {
+          "userName": "D",
+          "userComment": "Cool"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "This is title 2",
+      "content": "HELLO THIS IS THE CONTENT",
+      "publishDate": "25/11/2022",
+      "comments": [
+        {
+          "userName": "A",
+          "userComment": "Cool"
+        },
+        {
+          "userName": "B",
+          "userComment": "Cool"
+        },
+        {
+          "userName": "C",
+          "userComment": "Cool"
+        },
+        {
+          "userName": "D",
+          "userComment": "Cool"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "This is title 3",
+      "content": "HELLO THIS IS THE CONTENT",
+      "publishDate": "25/11/2022",
+      "comments": [
+        {
+          "userName": "A",
+          "userComment": "Cool"
+        },
+        {
+          "userName": "B",
+          "userComment": "Cool"
+        },
+        {
+          "userName": "C",
+          "userComment": "Cool"
+        },
+        {
+          "userName": "D",
+          "userComment": "Cool"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "This is title 4",
+      "content": "HELLO THIS IS THE CONTENT",
+      "publishDate": "25/11/2022",
+      "comments": [
+        {
+          "userName": "A",
+          "userComment": "Cool"
+        },
+        {
+          "userName": "B",
+          "userComment": "Cool"
+        },
+        {
+          "userName": "C",
+          "userComment": "Cool"
+        },
+        {
+          "userName": "D",
+          "userComment": "Cool"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "This is title 5",
+      "content": "HELLO THIS IS THE CONTENT",
+      "publishDate": "25/11/2022",
+      "comments": [
+        {
+          "userName": "A",
+          "userComment": "Cool"
+        },
+        {
+          "userName": "B",
+          "userComment": "Cool"
+        },
+        {
+          "userName": "C",
+          "userComment": "Cool"
+        },
+        {
+          "userName": "D",
+          "userComment": "Cool"
+        }
+      ]
+    }
+  ]
+}
