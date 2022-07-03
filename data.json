@@ -2,7 +2,7 @@
   "news": [
     {
       "id": 1,
-      "title": "This is title 1",
+      "title": "Animals get boost from Southampton tree vandals",
       "imgURL": "https://picsum.photos/1280/720",
       "content": "HELLO THIS IS THE CONTENT",
       "publishDate": "25/11/2022",
@@ -28,7 +28,7 @@
     {
       "id": 2,
       "imgURL": "https://picsum.photos/1280/720",
-      "title": "This is title 2",
+      "title": "The odd philosophy Icelanders live by",
       "content": "HELLO THIS IS THE CONTENT",
       "publishDate": "25/11/2022",
       "comments": [
